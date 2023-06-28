@@ -1,4 +1,4 @@
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import * as Linking from 'expo-linking';
 import SendChat from './Sendbox';
 import Message from './Message';
@@ -73,7 +73,7 @@ const Chat = () => {
 	}
 
 	return (
-		<View className='flex-1 bg-white'>
+		<View className='flex-1 bg-gray-100 dark:bg-black'>
 			<View className='flex-1'>
 				{
 				messages?.map(({ name, content, id, role }) => {
