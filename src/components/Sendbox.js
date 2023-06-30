@@ -1,22 +1,43 @@
-import { Text, TextInput, View } from "react-native"
+import { Text, TextInput, View } from 'react-native';
 import { styled } from 'nativewind';
+import { useState } from 'react';
 
-const StyledView = styled(View)
-const StyledText = styled(TextInput)
+const StyledView = styled(View);
+const StyledInput = styled(TextInput);
+const StyledText = styled(Text);
 
-const SendChat = () => {
-    return (
-			<StyledView className='flex-row p-4 bg-gray-200'>
-            <StyledView className='flex-1 bg-white rounded-full px-4 py-2'>
-                <StyledText className='text-gray-800'>
-                    Escribe un mensaje...
-                </StyledText>
-            </StyledView>
-            <StyledView className='ml-2 bg-blue-500 rounded-full w-12 h-12'>
-                <StyledText className='text-white mx-auto my-auto'>Enviar</StyledText>
-            </StyledView>
-        </StyledView>
-    )
-}
+const SendChat = ({ action, setData }) => {
+    const [demodata, setDemodata] = useState({
+        id: 6,
+        role: 'user',
+        name: 'Felipe',
+        content: null
+    });
+	const [inputValue, setInputValue] = useState('Ingrese un texto');
+	const handleChangeText = (text) => {
+        setData(({...demodata, id: demodata.id + 1, content: 'AAAA'}))
+		setInputValue(text);
+	};
 
-export default SendChat
+	return (
+		<StyledView className='flex-row p-4 bg-gray-200'>
+			<StyledView className='flex-1 bg-white rounded-full px-4 py-2'>
+				<StyledInput
+					value={inputValue}
+					onChangeText={handleChangeText}
+					className='text-gray-800'
+				/>
+			</StyledView>
+			<StyledView className='ml-2 bg-blue-500 rounded-full w-12 h-12'>
+				<StyledText
+					className='text-white mx-auto my-auto'
+					onPress={action}
+				>
+					Enviar
+				</StyledText>
+			</StyledView>
+		</StyledView>
+	);
+};
+
+export default SendChat;
