@@ -1,6 +1,7 @@
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const StyledView = styled(View);
 const StyledInput = styled(TextInput);
@@ -25,6 +26,14 @@ const SendChat = ({ action, onChange, inputValue, onFocus }) => {
 			>
 				<StyledText className='text-white mx-auto my-auto'>
 					Enviar
+				</StyledText>
+			</StyledBTN>
+			<StyledBTN 
+			className='ml-2 bg-blue-500 rounded-full w-12 h-12'
+			onPress={async () => await AsyncStorage.clear()}
+			>
+				<StyledText className='text-white mx-auto my-auto'>
+					Vaciar caché
 				</StyledText>
 			</StyledBTN>
 		</StyledView>

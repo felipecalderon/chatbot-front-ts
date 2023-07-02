@@ -9,7 +9,7 @@ const StyledView = styled(View)
 const StyledText = styled(Text)
 
 const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
-	if(!messages) return null
+	if(!messages || messages.length === 0) return <StyledView className='flex-1' />
 	const flatListRef = useRef(null);
     const buscarLinks = (texto) => {
 		const regex = /\[(.*?)\]\((.*?)\)/g;
@@ -50,7 +50,7 @@ const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
 	}
 
 	return (
-		<StyledView className='flex-1 bg-gray-100 dark:bg-black'>
+		<>
 			<StyledView className='flex-1'>
 				<FlatList 
 					ref={flatListRef}
@@ -68,8 +68,7 @@ const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
 					}}
 				/>
 			</StyledView>
-			<SendChat action={action} onChange={onChange} inputValue={inputValue} onFocus={onFocus}/>
-		</StyledView>
+		</>
 	);
 };
 
