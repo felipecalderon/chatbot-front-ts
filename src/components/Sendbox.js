@@ -1,10 +1,11 @@
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { styled } from 'nativewind';
 import { useState } from 'react';
 
 const StyledView = styled(View);
 const StyledInput = styled(TextInput);
 const StyledText = styled(Text);
+const StyledBTN = styled(TouchableOpacity)
 
 const SendChat = ({ action, onChange, inputValue, onFocus }) => {
 
@@ -18,14 +19,14 @@ const SendChat = ({ action, onChange, inputValue, onFocus }) => {
 					className='text-gray-800'
 				/>
 			</StyledView>
-			<StyledView className='ml-2 bg-blue-500 rounded-full w-12 h-12'>
-				<StyledText
-					className='text-white mx-auto my-auto'
-					onPress={action}
-				>
+			<StyledBTN 
+			className='ml-2 bg-blue-500 rounded-full w-12 h-12'
+			onPress={action}
+			>
+				<StyledText className='text-white mx-auto my-auto'>
 					Enviar
 				</StyledText>
-			</StyledView>
+			</StyledBTN>
 		</StyledView>
 	);
 };
