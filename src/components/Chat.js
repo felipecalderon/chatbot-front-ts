@@ -8,7 +8,7 @@ import { useRef } from 'react';
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
-const Chat = ({messages, action}) => {
+const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
 	if(!messages) return null
 	const flatListRef = useRef(null);
     const buscarLinks = (texto) => {
@@ -55,7 +55,7 @@ const Chat = ({messages, action}) => {
 				<FlatList 
 					ref={flatListRef}
 					data={messages}
-					onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
+					onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
 					renderItem={({ item }) => {
 						const { name, content, id, role } = item;
 						const cleanMessage = buscarLinks(content)
@@ -68,7 +68,7 @@ const Chat = ({messages, action}) => {
 					}}
 				/>
 			</StyledView>
-			<SendChat action={action}/>
+			<SendChat action={action} onChange={onChange} inputValue={inputValue} onFocus={onFocus}/>
 		</StyledView>
 	);
 };
