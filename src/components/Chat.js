@@ -1,6 +1,5 @@
 import { Text, View, FlatList } from 'react-native';
 import * as Linking from 'expo-linking';
-import SendChat from './Sendbox';
 import Message from './Message';
 import { styled } from 'nativewind';
 import { useRef } from 'react';

@@ -1,3 +1,4 @@
 export const CHAT = {
-    ROLE: 'assistant'
+    ROLE: 'assistant',
+    PLACEHOLDER: 'Ingrese un texto'
 }

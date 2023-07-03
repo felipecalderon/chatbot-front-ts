@@ -1,10 +1,15 @@
 import { StatusBar, View } from 'react-native';
-import Chat from './src/components/Chat';
 import { useEffect, useState } from 'react';
 import { randomUUID } from 'expo-crypto';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styled } from 'nativewind';
+import { CHAT } from './src/constants';
+import Chat from './src/components/Chat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import SendChat from './src/components/Sendbox';
+import axios from 'axios';
+
+// Endpoint al backend
+axios.defaults.baseURL = 'https://chatbot-back-felipe.up.railway.app/api'
 
 const StyledView = styled(View);
 const tempMessages = [
@@ -58,13 +63,24 @@ const tempMessages = [
 	},
 ];
 
+const fetchMessages = async (query) => {
+	try {
+		const {data} = await axios.post('/', {
+			content: query
+		})
+		return data
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 export default function App() {
-	const [content, setInputValue] = useState('Ingrese un texto');
+	const [content, setInputValue] = useState(CHAT.PLACEHOLDER);
 	const [uuid, setUuid] = useState('');
 	const [messages, setMsje] = useState([]);
 
 	const onPressInput = () => {
-		if (content === 'Ingrese un texto') setInputValue('');
+		if (content === CHAT.PLACEHOLDER) setInputValue('');
 	};
 
 	const handleInputChange = (text) => {
@@ -72,21 +88,22 @@ export default function App() {
 	};
 
 	const presionBtn = async () => {
-		if (content === '' || content === 'Ingrese un texto') {
+		if (content === '' || content === CHAT.PLACEHOLDER) {
 			return console.log('Falta texto en input');
 		}
-
+		
+		const IAmsje = await fetchMessages(content);
 		const newMessage = {
 			id: uuid,
 			name: 'Felipe',
 			content,
 		};
-
-		setMsje([...messages, newMessage]);
+		
+		setMsje([...messages, newMessage, IAmsje]);
 		setInputValue('');
 
 		// Guarda el nuevo mensaje en el AsyncStorage
-		const storedMessages = [...messages, newMessage];
+		const storedMessages = [...messages, newMessage, IAmsje];
 		await AsyncStorage.setItem('messages', JSON.stringify(storedMessages));
 	};
 
@@ -96,7 +113,7 @@ export default function App() {
 			setUuid(generatedUuid);
 		};
 		generateUUID();
-	}, []);
+	}, [messages]);
 
 	useEffect(() => {
 		const loadMessagesFromStorage = async () => {
