@@ -63,7 +63,7 @@ const tempMessages = [
 	},
 ];
 
-const fetchMessages = async (query) => {
+const fetchMessagesIA = async (query) => {
 	try {
 		const {data} = await axios.post('/', {
 			content: query
@@ -75,9 +75,10 @@ const fetchMessages = async (query) => {
 }
 
 export default function App() {
-	const [content, setInputValue] = useState(CHAT.PLACEHOLDER);
-	const [uuid, setUuid] = useState('');
-	const [messages, setMsje] = useState([]);
+	const [content, setInputValue] = useState(CHAT.PLACEHOLDER); // valor estatico, servirá para traducciones en constants.js
+	const [uuid, setUuid] = useState(''); // genera id random, dps cambia con db
+	const [messages, setMsje] = useState([]); // estructura base para mensajes IA
+	const [showTyping, setShowTyping] = useState(false); // muestra algo antes de recibir respuesta del back
 
 	const onPressInput = () => {
 		if (content === CHAT.PLACEHOLDER) setInputValue('');
@@ -88,24 +89,40 @@ export default function App() {
 	};
 
 	const presionBtn = async () => {
-		if (content === '' || content === CHAT.PLACEHOLDER) {
-			return console.log('Falta texto en input');
+		if (content === '' || content === 'Ingrese un texto') {
+		  return console.log('Falta texto en input');
+		}else if(content.toLocaleLowerCase() === 'cache'){
+			await AsyncStorage.clear()
+			setMsje([])
+			setInputValue('');
+			return console.log('Caché limpiada exitosamente');
 		}
-		
-		const IAmsje = await fetchMessages(content);
+	  
 		const newMessage = {
-			id: uuid,
-			name: 'Felipe',
-			content,
+		  id: uuid,
+		  name: 'Felipe',
+		  content,
 		};
-		
-		setMsje([...messages, newMessage, IAmsje]);
+	  
+		setMsje([...messages, newMessage]); // Mostrar el nuevo mensaje
 		setInputValue('');
-
-		// Guarda el nuevo mensaje en el AsyncStorage
-		const storedMessages = [...messages, newMessage, IAmsje];
-		await AsyncStorage.setItem('messages', JSON.stringify(storedMessages));
-	};
+	  
+		setShowTyping(true); // Mostrar el texto "escribiendo..."
+	  
+		try {
+		  const IAmsje = await fetchMessagesIA(content);
+	  
+		  setMsje([...messages, newMessage, IAmsje]);
+	  
+		  // Guarda el nuevo mensaje en el AsyncStorage
+		  const storedMessages = [...messages, newMessage];
+		  await AsyncStorage.setItem('messages', JSON.stringify(storedMessages));
+		} catch (error) {
+		  console.log(error);
+		}
+	  
+		setShowTyping(false); // Ocultar el texto "escribiendo..."
+	  };
 
 	useEffect(() => {
 		const generateUUID = () => {
@@ -131,10 +148,7 @@ export default function App() {
 				<StatusBar />
 				<Chat
 					messages={messages}
-					action={presionBtn}
-					onChange={handleInputChange}
-					inputValue={content}
-					onFocus={onPressInput}
+					showTyping={showTyping}
 				/>
 				<SendChat
 					action={presionBtn}

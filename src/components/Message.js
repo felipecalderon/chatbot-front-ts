@@ -5,7 +5,7 @@ import { styled } from 'nativewind';
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
-const Message = ({ role, name, content }) => {
+const Message = ({ role, name, content}) => {
 	if (role === CHAT.ROLE)
 		return (
 		<StyledView className='p-4'>

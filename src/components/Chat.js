@@ -2,12 +2,12 @@ import { Text, View, FlatList } from 'react-native';
 import * as Linking from 'expo-linking';
 import Message from './Message';
 import { styled } from 'nativewind';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
-const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
+const Chat = ({messages, showTyping}) => {
 	if(!messages || messages.length === 0) return <StyledView className='flex-1' />
 	const flatListRef = useRef(null);
     const buscarLinks = (texto) => {
@@ -47,6 +47,26 @@ const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
 	
 		return matches;
 	}
+	const [cargandoTxt, setCargando] = useState('')
+	let frase = '... escribiendo mensaje ...'
+
+	useEffect(() => {
+		let currentIndex = 0;
+		const interval = setInterval(() => {
+			// Cada 300ms, agrega el siguiente carácter a la cadena de texto
+			setCargando((prevText) => {
+			  if (currentIndex === frase.length) {
+				// Si se llega al final de la frase, reinicia el texto
+				currentIndex = 0;
+				return '';
+			  } else {
+				currentIndex++;
+				return frase.slice(0, currentIndex);
+			  }
+			});
+		  }, 100);
+		  return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonta
+	}, [])
 
 	return (
 		<>
@@ -59,6 +79,7 @@ const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
 						const { name, content, id, role } = item;
 						const cleanMessage = buscarLinks(content)
 						return <Message
+							showTyping={showTyping}
 							key={id}
 							name={name}
 							content={cleanMessage}
@@ -66,6 +87,15 @@ const Chat = ({messages, action, onChange, inputValue, onFocus}) => {
 						/>
 					}}
 				/>
+				{
+					showTyping && <StyledView className='p-4'>
+						<StyledView className='flex flex-row items-center mb-2'>
+							<StyledView className='w-4 h-4 rounded-full bg-green-500' />
+							<StyledText className='mx-2 font-bold text-lg'>Ferretería Geoconstructor</StyledText>
+						</StyledView>
+						<StyledText className='ml-6 text-gray-800'>{cargandoTxt}</StyledText>
+					</StyledView>
+				}
 			</StyledView>
 		</>
 	);
