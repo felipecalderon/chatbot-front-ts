@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "expo-chatbot",
+    "name": "ChatBot Felipe",
     "slug": "expo-chatbot",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logochatbot.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -25,7 +25,7 @@
       "package": "com.felipecalderon.expochatbot"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/logochatbot.png"
     },
     "extra": {
       "eas": {
