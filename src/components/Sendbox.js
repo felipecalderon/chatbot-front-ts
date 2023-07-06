@@ -1,10 +1,6 @@
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
-import { styled } from 'nativewind';
+// import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyledView, StyledInput, StyledBtn, StyledText } from '@/NativeWindConfig'
 
-const StyledView = styled(View);
-const StyledInput = styled(TextInput);
-const StyledText = styled(Text);
-const StyledBTN = styled(TouchableOpacity)
 
 const SendChat = ({ action, onChange, inputValue, onFocus }) => {
 	const handleKeyPress = ({ nativeEvent }) => nativeEvent.key === 'Enter' && console.log('Presionaste enter');
@@ -20,14 +16,14 @@ const SendChat = ({ action, onChange, inputValue, onFocus }) => {
 					className='text-gray-800'
 				/>
 			</StyledView>
-			<StyledBTN 
+			<StyledBtn 
 				className='ml-2 bg-blue-500 rounded-full w-12 h-12'
 				onPress={action}
 			>
 				<StyledText className='text-white mx-auto my-auto'>
 					Enviar
 				</StyledText>
-			</StyledBTN>
+			</StyledBtn>
 		</StyledView>
 	);
 };

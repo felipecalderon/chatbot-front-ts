@@ -1,18 +1,16 @@
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { useEffect, useState } from 'react';
 import { randomUUID } from 'expo-crypto';
-import { styled } from 'nativewind';
-import { CHAT } from './src/constants';
-import Chat from './src/components/Chat';
+import { CHAT } from '@/constants';
+import { StyledView } from '@/NativeWindConfig'
+import Chat from '@/components/Chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import SendChat from './src/components/Sendbox';
+import SendChat from '@/components/Sendbox';
 import axios from 'axios';
 
 // Endpoint al backend
 // axios.defaults.baseURL = 'https://chatbot-back-felipe.up.railway.app/api'
 axios.defaults.baseURL = 'http://192.168.1.120:3001/api'
-
-const StyledView = styled(View);
 
 const fetchMessagesIA = async (query) => {
 	try {

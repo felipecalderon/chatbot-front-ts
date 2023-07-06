@@ -1,9 +1,5 @@
-import { Text, View } from 'react-native';
 import { CHAT } from '../constants'
-import { styled } from 'nativewind';
-
-const StyledView = styled(View)
-const StyledText = styled(Text)
+import { StyledView, StyledText } from '@/NativeWindConfig'
 
 const Message = ({ role, name, content}) => {
 	if (role === CHAT.ROLE)

@@ -1,11 +1,9 @@
 import { Text, View, FlatList } from 'react-native';
 import * as Linking from 'expo-linking';
 import Message from './Message';
-import { styled } from 'nativewind';
-import { useEffect, useRef, useState } from 'react';
+import { StyledView, StyledText } from '@/NativeWindConfig'
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
+import { useEffect, useRef, useState } from 'react';
 
 const Chat = ({messages, showTyping}) => {
 	if(!messages || messages.length === 0) return <StyledView className='flex-1' />
