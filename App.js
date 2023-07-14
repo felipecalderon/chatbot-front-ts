@@ -1,4 +1,4 @@
-import { StatusBar, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 import { useEffect, useState } from 'react';
 import { randomUUID } from 'expo-crypto';
 import { CHAT } from '@/constants';
@@ -7,9 +7,10 @@ import Chat from '@/components/Chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SendChat from '@/components/Sendbox';
 import axios from 'axios';
+// import app from './src/configs/Firebase';
 // Endpoint al backend
-// axios.defaults.baseURL = 'https://chatbot-back-felipe.up.railway.app/api'
-axios.defaults.baseURL = 'http://192.168.1.120:3001/api';
+axios.defaults.baseURL = 'https://chatbot-back-felipe.up.railway.app/api'
+// axios.defaults.baseURL = 'http://192.168.1.120:3001/api';
 
 const fetchMessagesIA = async (query) => {
 	try {
@@ -49,7 +50,7 @@ export default function App() {
 
 		const newMessage = {
 			id: uuid,
-			name: 'Felipe',
+			name: 'Cliente',
 			content,
 		};
 

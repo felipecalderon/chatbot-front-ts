@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logochatbot.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.felipecalderon.expochatbot"
