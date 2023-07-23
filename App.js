@@ -7,6 +7,7 @@ import Chat from '@/components/Chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SendChat from '@/components/Sendbox';
 import axios from 'axios';
+import Access from './src/components/Access';
 // import app from './src/configs/Firebase';
 // Endpoint al backend
 axios.defaults.baseURL = 'https://chatbot-back-felipe.up.railway.app/api'
@@ -90,12 +91,15 @@ export default function App() {
 		};
 		loadMessagesFromStorage();
 	}, []);
-
+	return <Access />
 	return (
 		<>
-			<StyledView className='flex-1 bg-gray-100 dark:bg-black'>
+			<StyledView className='flex-1 bg-gray-100 dark:bg-gray-800'>
 				<StatusBar showHideTransition={'slide'}/>
-				<Chat messages={messages} showTyping={showTyping} />
+				<Chat 
+					messages={messages} 
+					showTyping={showTyping} 
+				/>
 				<SendChat
 					action={presionBtn}
 					onChange={handleInputChange}

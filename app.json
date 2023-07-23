@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ChatBot Felipe",
-    "slug": "expo-chatbot",
-    "version": "1.0.0",
+    "name": "GeoChatbot",
+    "slug": "geochatbot",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/logochatbot.png",
     "userInterfaceStyle": "light",
